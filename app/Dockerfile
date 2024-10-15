@@ -8,7 +8,7 @@ COPY . /opt
 
 RUN pip install --no-cache-dir Flask
 
-EXPOSE 8085
+EXPOSE 8080
 
 ENV ODOO_URL=""
 ENV PGADMIN_URL=""

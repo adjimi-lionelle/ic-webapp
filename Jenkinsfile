@@ -2,7 +2,7 @@ pipeline {
     environment {
         IMAGE_NAME = "webapp"
         IMAGE_TAG = "1.0"  // Correction ici pour définir la balise (tag) de l'image
-        APP_CONTAINER_PORT = "8085"
+        APP_CONTAINER_PORT = "8080"
         APP_EXPOSED_PORT = "8085"
         DOCKERHUB_ID = "lionie"
         HOST_IP = "192.168.56.10"

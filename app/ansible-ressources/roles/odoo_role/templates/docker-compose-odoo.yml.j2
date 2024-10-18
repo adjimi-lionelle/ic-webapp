@@ -29,7 +29,7 @@ services:
             - USER=odoo_user
             - PASSWORD=odoo_password
             - HOST=postgres
-        image: odoo:13.0
+        image: odoo:18.0
 volumes:
     {{ odoo_web_data_volume }}:
     {{ pgdata_volume }}:

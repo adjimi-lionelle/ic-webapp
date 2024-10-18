@@ -70,30 +70,21 @@ pipeline {
           agent any
           environment {
             VAULT_KEY = credentials('vault_key')
-            PRIVATE_KEY = credentials('private_key')
-            PUBLIC_KEY = credentials('public_key')
-            VAGRANT_PASSWORD = credentials('vagrant_password')
           }          
           steps {
              script {
                sh '''
                   echo "Cleaning workspace before starting"
-                  rm -f vault.key id_rsa id_rsa.pub password
+                  rm -f vault.key
                   echo "Generating vault key"
                   echo -e $VAULT_KEY > vault.key
-                  echo "Generating private key"
-                  cp $PRIVATE_KEY  id_rsa
-                  chmod 400 id_rsa vault.key
-                  #echo "Generating public key"
-                  #echo -e $PUBLIC_KEY > id_rsa.pub
-                  #echo -e $VAGRANT_PASSWORD > password
-                  echo "Generating host_vars for EC2 servers"
-                  echo "ansible_host: $(awk '{print $2}' /var/jenkins_home/workspace/ic-webapp/public_ip.txt)" > sources/ansible-ressources/host_vars/odoo_server_dev.yml
-                  echo "ansible_host: $(awk '{print $2}' /var/jenkins_home/workspace/ic-webapp/public_ip.txt)" > sources/ansible-ressources/host_vars/ic_webapp_server_dev.yml
-                  echo "ansible_host: $(awk '{print $2}' /var/jenkins_home/workspace/ic-webapp/public_ip.txt)" > sources/ansible-ressources/host_vars/pg_admin_server_dev.yml
-                  echo "Generating host_pgadmin_ip and  host_odoo_ip variables"
-                  echo "host_odoo_ip: $(awk '{print $2}' /var/jenkins_home/workspace/ic-webapp/public_ip.txt)" >> sources/ansible-ressources/host_vars/ic_webapp_server_dev.yml
-                  echo "host_pgadmin_ip: $(awk '{print $2}' /var/jenkins_home/workspace/ic-webapp/public_ip.txt)" >> sources/ansible-ressources/host_vars/ic_webapp_server_dev.yml
+                  echo "ansible_host: 192.168.56.12" > sources/ansible-ressources/host_vars/odoo_server.yml
+                  echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/ic_webapp_server.yml
+                  echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/pg_admin_server.yml
+                  echo "host_pgadmin_ip: 192.168.56.11" >> sources/ansible-ressources/host_vars/ic_webapp_server.yml
+                  echo "host_odoo_ip: 192.168.56.12" >> sources/ansible-ressources/host_vars/ic_webapp_server.yml
+
+                        
 
                '''
              }

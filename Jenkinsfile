@@ -67,10 +67,7 @@ pipeline {
             }
         }
          stage ('Prepare Ansible environment') {
-          agent any
-          environment {
-            VAULT_KEY = credentials('vault_key')
-          }          
+          agent any         
           steps {
              script {
                sh '''

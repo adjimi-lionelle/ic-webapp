@@ -75,9 +75,6 @@ pipeline {
              script {
                sh '''
                   echo "Cleaning workspace before starting"
-                  rm -f vault.key
-                  echo "Generating vault key"
-                  echo -e $VAULT_KEY > vault.key
                   echo "ansible_host: 192.168.56.12" > sources/ansible-ressources/host_vars/odoo_server.yml
                   echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/ic_webapp_server.yml
                   echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/pg_admin_server.yml
@@ -122,7 +119,7 @@ pipeline {
                     }
                 }
 
-                stage ("PRODUCTION - Deploy pgadmin") {
+                /*stage ("PRODUCTION - Deploy pgadmin") {
                     steps {
                         script {
                             sh '''
@@ -153,7 +150,7 @@ pipeline {
                             '''
                         }
                     }
-                }
+                }*/
             }
         } 
       

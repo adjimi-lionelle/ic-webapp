@@ -119,38 +119,7 @@ pipeline {
                     }
                 }
 
-                /*stage ("PRODUCTION - Deploy pgadmin") {
-                    steps {
-                        script {
-                            sh '''
-                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible-playbook app/ansible-ressources/playbooks/deploy-pgadmin.yml --vault-password-file vault.key  -l pg_admin
-                            '''
-                        }
-                    }
-                }
-                stage ("PRODUCTION - Deploy odoo") {
-                    steps {
-                        script {
-                            sh '''
-                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible-playbook app/ansible-ressources/playbooks/deploy-odoo.yml --vault-password-file vault.key  -l odoo
-                            '''
-                        }
-                    }
-                }
-
-                stage ("PRODUCTION - Deploy ic-webapp") {
-                    steps {
-                        script {
-                            sh '''
-                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible-playbook app/ansible-ressources/playbooks/deploy-ic-webapp.yml --vault-password-file vault.key  -l ic_webapp
-
-                            '''
-                        }
-                    }
-                }*/
+               
             }
         } 
       

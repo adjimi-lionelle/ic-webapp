@@ -110,8 +110,19 @@ pipeline {
 
                             sh '''
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible-playbook app/ansible-ressources/playbooks/install-docker.yml  -l ic_webapp, odoo_server
+                                ansible-playbook app/ansible-ressources/playbooks/install-docker.yml  -l ic_webapp_server, odoo_server
                             '''                                
+                        }
+                    }
+                }
+
+                stage ("PRODUCTION - Deploy pgadmin") {
+                    steps {
+                        script {
+                            sh '''
+                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
+                                ansible-playbook app/ansible-ressources/playbooks/deploy-pgadmin.yml  -l pg_admin
+                            '''
                         }
                     }
                 }

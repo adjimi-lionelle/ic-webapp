@@ -71,6 +71,7 @@ pipeline {
           steps {
              script {
                sh '''
+                  export PATH=$PATH:/usr/bin
                   echo "Cleaning workspace before starting"
                   echo "ansible_host: 192.168.56.12" > app/ansible-ressources/host_vars/odoo_server.yml
                   echo "ansible_host: 192.168.56.11" > app/ansible-ressources/host_vars/ic_webapp_server.yml
@@ -93,8 +94,7 @@ pipeline {
                     steps {
                         script {
                             sh '''
-                                apt update -y
-                                apt install sshpass -y                            
+                                export PATH=$PATH:/usr/bin
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible odoo,ic_webapp -m ping -o
                             '''
@@ -106,6 +106,7 @@ pipeline {
                     steps {
                         script {
                             sh '''
+                                export PATH=$PATH:/usr/bin
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible-playbook app/ansible-ressources/playbooks/deploy-pgadmin.yml  -l pg_admin
                             '''

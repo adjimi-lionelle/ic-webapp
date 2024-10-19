@@ -127,7 +127,7 @@ pipeline {
                     }
                 }
 
-                stage ("PRODUCTION - Deploy odoo") {
+               /* stage ("PRODUCTION - Deploy odoo") {
                     steps {
                         script {
                             sh '''
@@ -136,7 +136,7 @@ pipeline {
                             '''
                         }
                     }
-                }
+                }*/
 
                
             }

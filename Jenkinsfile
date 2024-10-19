@@ -72,11 +72,11 @@ pipeline {
              script {
                sh '''
                   echo "Cleaning workspace before starting"
-                  echo "ansible_host: 192.168.56.12" > sources/ansible-ressources/host_vars/odoo_server.yml
-                  echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/ic_webapp_server.yml
-                  echo "ansible_host: 192.168.56.11" > sources/ansible-ressources/host_vars/pg_admin_server.yml
-                  echo "host_pgadmin_ip: 192.168.56.11" >> sources/ansible-ressources/host_vars/ic_webapp_server.yml
-                  echo "host_odoo_ip: 192.168.56.12" >> sources/ansible-ressources/host_vars/ic_webapp_server.yml
+                  echo "ansible_host: 192.168.56.12" > app/ansible-ressources/host_vars/odoo_server.yml
+                  echo "ansible_host: 192.168.56.11" > app/ansible-ressources/host_vars/ic_webapp_server.yml
+                  echo "ansible_host: 192.168.56.11" > app/ansible-ressources/host_vars/pg_admin_server.yml
+                  echo "host_pgadmin_ip: 192.168.56.11" >> app/ansible-ressources/host_vars/ic_webapp_server.yml
+                  echo "host_odoo_ip: 192.168.56.12" >> app/ansible-ressources/host_vars/ic_webapp_server.yml
 
                         
 

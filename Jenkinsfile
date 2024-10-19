@@ -89,7 +89,7 @@ pipeline {
             /* when { expression { GIT_BRANCH == 'origin/prod'} } */
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
             stages {
-                stage ("PRODUCTION - Ping target hosts") {
+              /*  stage ("PRODUCTION - Ping target hosts") {
                     steps {
                         script {
                             sh '''
@@ -114,7 +114,7 @@ pipeline {
                             '''                                
                         }
                     }
-                }
+                }*/
 
                 stage ("PRODUCTION - Deploy pgadmin") {
                     steps {
@@ -122,6 +122,17 @@ pipeline {
                             sh '''
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible-playbook app/ansible-ressources/playbooks/deploy-pgadmin.yml  -l pg_admin
+                            '''
+                        }
+                    }
+                }
+
+                stage ("PRODUCTION - Deploy odoo") {
+                    steps {
+                        script {
+                            sh '''
+                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
+                                ansible-playbook app/ansible-ressources/playbooks/deploy-odoo.yml  -l odoo
                             '''
                         }
                     }

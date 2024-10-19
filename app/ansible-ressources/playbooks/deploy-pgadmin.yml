@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: pg_admin
   become: true
   roles:
     - { role: pgadmin_role}

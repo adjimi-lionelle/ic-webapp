@@ -96,7 +96,7 @@ pipeline {
                                 apt update -y
                                 apt install sshpass -y                            
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible prod -m ping  -o
+                                ansible odoo,ic_webapp -m ping -o
                             '''
                         }
                     }

@@ -89,7 +89,7 @@ pipeline {
             /* when { expression { GIT_BRANCH == 'origin/prod'} } */
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
             stages {
-              /*  stage ("PRODUCTION - Ping target hosts") {
+                stage ("PRODUCTION - Ping target hosts") {
                     steps {
                         script {
                             sh '''
@@ -114,7 +114,7 @@ pipeline {
                             '''                                
                         }
                     }
-                }*/
+                }
 
                 stage ("PRODUCTION - Deploy pgadmin") {
                     steps {

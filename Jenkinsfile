@@ -124,6 +124,19 @@ pipeline {
                     }
                 }
 
+
+                stage ("PRODUCTION - Deploy ic-webapp") {
+                    steps {
+                        script {
+                            sh '''
+                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
+                                ansible-playbook app/ansible-ressources/playbooks/deploy-ic-webapp.yml -l ic_webapp
+
+                            '''
+                        }
+                    }
+                }
+
                
             }
         } 

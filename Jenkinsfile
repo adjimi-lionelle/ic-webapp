@@ -1,13 +1,12 @@
 pipeline {
     environment {
         IMAGE_NAME = "webapp"
-        IMAGE_TAG = "1.0"  // Correction ici pour définir la balise (tag) de l'image
+        IMAGE_TAG = ""  // Correction ici pour définir la balise (tag) de l'image
         APP_CONTAINER_PORT = "8085"
         APP_EXPOSED_PORT = "8085"
         DOCKERHUB_ID = "lionie"
         HOST_IP = "192.168.56.10"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
-        VERSION = ""
     }
     agent none
     stages {
@@ -15,12 +14,12 @@ pipeline {
             agent any
             steps {
                 script {
-                    VERSION = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
-                    echo "Version extracted: ${VERSION}"
+                    IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
+                    echo "Version extracted: ${IMAGE_TAG}"
                 }
             }
         }
- /*       stage('Build image') {
+       /* stage('Build image') {
             agent any
             steps {
                 script {

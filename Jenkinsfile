@@ -93,7 +93,7 @@ pipeline {
                     steps {
                         script {
                             sh '''
-                                yum install sshpass -y                            
+                                apt install sshpass -y                            
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible odoo,ic_webapp -m ping -o
                             '''

@@ -17,13 +17,8 @@ pipeline {
                     // Extraction de la version dans une variable locale
                     def imageTag = sh(script: "awk -F': ' '/version/ {print \$2}' app/ic-webapp/releases.txt", returnStdout: true).trim()
                     echo "Version extracted: ${imageTag}"
-                    // Stocker la version dans l'environnement pour la suite du pipeline
-                    currentBuild.displayName = "Build-${imageTag}"
-                    // Utilisation de la variable locale pour l'étape suivante
-                    script {
-                        // Définition de la version dans une variable accessible à toutes les étapes
-                        env.IMAGE_TAG = imageTag
-                    }
+                    env.IMAGE_TAG = imageTag
+                    
                 }
             }
         }

@@ -91,29 +91,16 @@ pipeline {
             stages {
                 stage ("PRODUCTION - Ping target hosts") {
                     steps {
-                        script {
+                         script {
                             sh '''
+                                apt update -y
                                 apt install sshpass -y                            
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible odoo,ic_webapp -m ping -o
                             '''
                         }
                     }
-                }                                                       
-               /* stage ("PRODUCTION - Install Docker on all hosts") {
-                    steps {
-                        script {
-                            timeout(time: 30, unit: "MINUTES") {
-                                input message: "Etes vous certains de vouloir cette MEP ?", ok: 'Yes'
-                            }                            
-
-                            sh '''
-                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                ansible-playbook app/ansible-ressources/playbooks/install-docker.yml  -l ic_webapp_server,odoo_server
-                            '''                                
-                        }
-                    }
-                }*/
+                }  
 
                 stage ("PRODUCTION - Deploy pgadmin") {
                     steps {
@@ -126,7 +113,7 @@ pipeline {
                     }
                 }
 
-               /* stage ("PRODUCTION - Deploy odoo") {
+                stage ("PRODUCTION - Deploy odoo") {
                     steps {
                         script {
                             sh '''
@@ -135,7 +122,7 @@ pipeline {
                             '''
                         }
                     }
-                }*/
+                }
 
                
             }

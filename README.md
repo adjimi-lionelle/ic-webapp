@@ -9,6 +9,8 @@ Déployer une application WordPress et sa base de données MySQL dans un cluster
 
 ## **1) Conteneurisation de l’application web**
 
+## **2) Partie 2 : Mise en place d'un pipeline CI/CD à l'aide de JENKINS et de ANSIBLE.
+
 
 
 Pour créer le namespace, exécutez la commande suivante :

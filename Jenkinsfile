@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     // Extraction de la version dans une variable locale
-                    def imageTag = sh(script: "awk -F': ' '/version/ {print \$2}' app/ic-webapp/releases.txt", returnStdout: true).trim()
+                    def imageTag = env.IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
                     echo "Version extracted: ${imageTag}"
                     env.IMAGE_TAG = imageTag
                     

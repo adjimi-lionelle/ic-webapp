@@ -96,7 +96,7 @@ pipeline {
                             sh '''
                                 export PATH=$PATH:/usr/bin
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
-                                /usr/bin/ansible odoo,ic_webapp -m ping -o
+                                ansible odoo,ic_webapp -m ping -o
                             '''
                         }
                     }

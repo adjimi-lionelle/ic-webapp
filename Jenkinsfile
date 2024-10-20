@@ -7,12 +7,11 @@ pipeline {
         DOCKERHUB_ID = "lionie"
         HOST_IP = "192.168.56.10"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
-         VERSION = ""
+        VERSION = ""
     }
     agent none
     stages {
-        stages {
-        stage('Extract version') {
+         stage('Extract version') {
             steps {
                 script {
                     VERSION = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
@@ -20,15 +19,15 @@ pipeline {
                 }
             }
         }
-      /*  stage('Build image') {
+        stage('Build image') {
             agent any
             steps {
                 script {
                     sh 'docker build -f ./app/ic-webapp/Dockerfile -t ${DOCKERHUB_ID}/${IMAGE_NAME}:${IMAGE_TAG} ./app/ic-webapp'
                 }
             }
-        }*/
-       /* stage('Run container based on built image') {
+        }
+        stage('Run container based on built image') {
             agent any
             steps {
                 script {
@@ -40,8 +39,8 @@ pipeline {
                     '''
                 }
             }
-        }*/
-       /* stage('Test image') {
+        }
+        stage('Test image') {
             agent any
             steps {
                 script {
@@ -93,9 +92,9 @@ pipeline {
                '''
              }
           }
-        }*/
+        }
                   
-       /* stage ("Deploy in PRODUCTION") {
+        stage ("Deploy in PRODUCTION") {
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
             stages {
                 stage ("PRODUCTION - Ping target hosts") {
@@ -148,7 +147,7 @@ pipeline {
 
                
             }
-        }*/
+        } 
       
     }
 }

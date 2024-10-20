@@ -67,11 +67,10 @@ pipeline {
             }
         }
          stage ('Prepare Ansible environment') {
-          agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }         
+          agent any         
           steps {
              script {
                sh '''
-                  
                   echo "Cleaning workspace before starting"
                   echo "ansible_host: 192.168.56.12" > app/ansible-ressources/host_vars/odoo_server.yml
                   echo "ansible_host: 192.168.56.11" > app/ansible-ressources/host_vars/ic_webapp_server.yml
@@ -88,16 +87,30 @@ pipeline {
                   
         stage ("Deploy in PRODUCTION") {
             /* when { expression { GIT_BRANCH == 'origin/prod'} } */
-            agent any                 
+            agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
             stages {
                 stage ("PRODUCTION - Ping target hosts") {
                     steps {
                         script {
                             sh '''
-                                export PATH=$PATH:/usr/bin
+                                yum install sshpass -y                            
                                 export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
                                 ansible odoo,ic_webapp -m ping -o
                             '''
+                        }
+                    }
+                }                                                       
+                stage ("PRODUCTION - Install Docker on all hosts") {
+                    steps {
+                        script {
+                            timeout(time: 30, unit: "MINUTES") {
+                                input message: "Etes vous certains de vouloir cette MEP ?", ok: 'Yes'
+                            }                            
+
+                            sh '''
+                                export ANSIBLE_CONFIG=$(pwd)/app/ansible-ressources/ansible.cfg
+                                ansible-playbook app/ansible-ressources/playbooks/install-docker.yml  -l ic_webapp_server,odoo_server
+                            '''                                
                         }
                     }
                 }

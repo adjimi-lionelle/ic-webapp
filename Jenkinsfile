@@ -1,7 +1,7 @@
 pipeline {
     environment {
         IMAGE_NAME = "webapp"
-        IMAGE_TAG = ""  // Correction ici pour définir la balise (tag) de l'image
+        //IMAGE_TAG = ""  // Correction ici pour définir la balise (tag) de l'image
         APP_CONTAINER_PORT = "8085"
         APP_EXPOSED_PORT = "8085"
         DOCKERHUB_ID = "lionie"
@@ -15,9 +15,8 @@ pipeline {
             steps {
                 script {
                     // Extraction de la version dans une variable locale
-                    def imageTag = env.IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
-                    echo "Version extracted: ${imageTag}"
-                    env.IMAGE_TAG = imageTag
+                    env.IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
+                    echo "Version extracted: ${env.IMAGE_TAG}"
                     
                 }
             }
@@ -26,8 +25,8 @@ pipeline {
             agent any
             steps {
                 script {
-                    env.IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
-                    echo "Version extracted: ${env.IMAGE_TAG}"
+                    IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
+                    echo "Version extracted: ${IMAGE_TAG}"
                 }
             }
         }*/
@@ -35,7 +34,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh 'docker build -f ./app/ic-webapp/Dockerfile -t ${DOCKERHUB_ID}/${IMAGE_NAME}:${env.IMAGE_TAG} ./app/ic-webapp'
+                    sh 'docker build -f ./app/ic-webapp/Dockerfile -t ${DOCKERHUB_ID}/${IMAGE_NAME}:${IMAGE_TAG} ./app/ic-webapp'
                 }
             }
         }
@@ -46,7 +45,7 @@ pipeline {
                     sh '''
                     echo "Cleaning existing container if exist"
                     docker ps -a | grep -i $IMAGE_NAME && docker rm -f ${IMAGE_NAME}
-                    docker run --name ${IMAGE_NAME} -d -p $APP_EXPOSED_PORT:$APP_CONTAINER_PORT ${DOCKERHUB_ID}/$IMAGE_NAME:$env.IMAGE_TAG
+                    docker run --name ${IMAGE_NAME} -d -p $APP_EXPOSED_PORT:$APP_CONTAINER_PORT ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
                     sleep 5
                     '''
                 }
@@ -82,7 +81,7 @@ pipeline {
                 script {
                     sh '''
                     echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_ID --password-stdin
-                    docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$env.IMAGE_TAG
+                    docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
             }

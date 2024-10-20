@@ -27,8 +27,8 @@ pipeline {
                     sh 'docker build -f ./app/ic-webapp/Dockerfile -t ${DOCKERHUB_ID}/${IMAGE_NAME}:${IMAGE_TAG} ./app/ic-webapp'
                 }
             }
-        }
-        stage('Run container based on built image') {
+        }*/
+       /* stage('Run container based on built image') {
             agent any
             steps {
                 script {
@@ -40,8 +40,8 @@ pipeline {
                     '''
                 }
             }
-        }
-        stage('Test image') {
+        }*/
+       /* stage('Test image') {
             agent any
             steps {
                 script {
@@ -93,10 +93,9 @@ pipeline {
                '''
              }
           }
-        }
+        }*/
                   
-        stage ("Deploy in PRODUCTION") {
-            /* when { expression { GIT_BRANCH == 'origin/prod'} } */
+       /* stage ("Deploy in PRODUCTION") {
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
             stages {
                 stage ("PRODUCTION - Ping target hosts") {
@@ -149,7 +148,7 @@ pipeline {
 
                
             }
-        } */
+        }*/
       
     }
 }

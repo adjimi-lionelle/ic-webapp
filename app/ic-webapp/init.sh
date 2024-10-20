@@ -9,4 +9,4 @@ else
   echo "You did not send ODOO_URL and PGADMIN_URL, we are going to use default URL setted on Dockerfile"
 fi
 
-exec "$@"
+exec "$@" 

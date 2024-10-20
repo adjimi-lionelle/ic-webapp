@@ -100,7 +100,7 @@ pipeline {
                         }
                     }
                 }                                                       
-                stage ("PRODUCTION - Install Docker on all hosts") {
+               /* stage ("PRODUCTION - Install Docker on all hosts") {
                     steps {
                         script {
                             timeout(time: 30, unit: "MINUTES") {
@@ -113,7 +113,7 @@ pipeline {
                             '''                                
                         }
                     }
-                }
+                }*/
 
                 stage ("PRODUCTION - Deploy pgadmin") {
                     steps {

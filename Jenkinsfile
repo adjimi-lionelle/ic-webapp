@@ -7,10 +7,20 @@ pipeline {
         DOCKERHUB_ID = "lionie"
         HOST_IP = "192.168.56.10"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
+         VERSION = ""
     }
     agent none
     stages {
-        stage('Build image') {
+        stages {
+        stage('Extract version') {
+            steps {
+                script {
+                    VERSION = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
+                    echo "Version extracted: ${VERSION}"
+                }
+            }
+        }
+      /*  stage('Build image') {
             agent any
             steps {
                 script {
@@ -139,7 +149,7 @@ pipeline {
 
                
             }
-        } 
+        } */
       
     }
 }

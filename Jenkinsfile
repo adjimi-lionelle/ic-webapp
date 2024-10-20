@@ -12,6 +12,7 @@ pipeline {
     agent none
     stages {
          stage('Extract version') {
+            agent any
             steps {
                 script {
                     VERSION = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()

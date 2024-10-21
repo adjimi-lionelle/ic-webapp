@@ -1,7 +1,6 @@
 pipeline {
     environment {
         IMAGE_NAME = "webapp"
-        //IMAGE_TAG = ""  // Correction ici pour définir la balise (tag) de l'image
         APP_CONTAINER_PORT = "8085"
         APP_EXPOSED_PORT = "8085"
         DOCKERHUB_ID = "lionie"
@@ -14,7 +13,6 @@ pipeline {
             agent any
             steps {
                 script {
-                    // Extraction de la version dans une variable locale
                     env.IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
                     echo "Version extracted: ${env.IMAGE_TAG}"
                     
@@ -77,7 +75,7 @@ pipeline {
                 }
             }
         }
-        /*stage ('Prepare Ansible environment') {
+        stage ('Prepare Ansible environment') {
           agent any         
           steps {
              script {
@@ -94,7 +92,7 @@ pipeline {
                '''
              }
           }
-        }*/
+        }
                   
         stage ("Deploy in PRODUCTION") {
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     

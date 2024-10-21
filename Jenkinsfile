@@ -21,15 +21,6 @@ pipeline {
                 }
             }
         }
-        /* stage('Extract version') {
-            agent any
-            steps {
-                script {
-                    IMAGE_TAG = sh(script: "awk '/version/ {sub(/^.*: /, \"\"); print \$1}' app/ic-webapp/releases.txt", returnStdout: true).trim()
-                    echo "Version extracted: ${IMAGE_TAG}"
-                }
-            }
-        }*/
         stage('Build image') {
             agent any
             steps {
@@ -86,7 +77,7 @@ pipeline {
                 }
             }
         }
-         stage ('Prepare Ansible environment') {
+        /*stage ('Prepare Ansible environment') {
           agent any         
           steps {
              script {
@@ -103,7 +94,7 @@ pipeline {
                '''
              }
           }
-        }
+        }*/
                   
         stage ("Deploy in PRODUCTION") {
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest'  } }                     
